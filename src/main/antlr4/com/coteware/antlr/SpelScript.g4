@@ -1,7 +1,11 @@
 grammar SpelScript;
 
+options {
+  caseInsensitive = true;
+}
+
 scroll
- : unit_statement* EOF
+ : block+ EOF
  ;
 
 unit_statement
@@ -197,6 +201,13 @@ expressions
 expression
     : logical_expression
     | literal
+    | spring_expression
+    ;
+
+
+
+spring_expression
+    : SPEL_START literal (identifier)? SPEL_END
     ;
 
 logical_expression
@@ -220,6 +231,7 @@ logical_operation
 literal
     : CHAR_STRING
     | numeric
+    | numeric_negative
     | MAXVALUE
     ;
 
@@ -234,8 +246,6 @@ numeric_negative
 
 quoted_string
     : CHAR_STRING
-    //| CHAR_STRING_PERL
-    | NATIONAL_CHAR_STRING_LIT
     ;
 
 concatenation
@@ -296,6 +306,8 @@ GOTO                           : 'GOTO';
 NULL_                          : 'NULL';
 RAISE                          : 'RAISE';
 EXCEPTION                      : 'EXCEPTION';
+SPEL_START                     : 'SPEL_START';
+SPEL_END                       : 'SPEL_END';
 
 STRING                         : 'STRING';
 INTEGER                        : 'INTEGER';
@@ -305,9 +317,46 @@ BOOLEAN                        : 'BOOLEAN';
 FALSE                          : 'FALSE';
 FLOAT                          : 'FLOAT';
 
+//SPEL_STRING: SIMPLE_LETTER (
+//              SIMPLE_LETTER
+//             | '$'
+//             | '_'
+//             | '#'
+//             | '@'
+//             | '!'
+//             | '?'
+//             | '&'
+//             | '^'
+//             | '%'
+//             | [0-9]
+//             | '*'
+//             | '.'
+//             | '/'
+//             | '('
+//             | ')'
+//             | '['
+//             | ']'
+//             | '{'
+//             | '}'
+//             | '|'
+//             | '='
+//             | '+'
+//             | '-'
+//             | '\''
+//             | '>'
+//             | '<'
+//             | '~'
+//             | '/'
+//             | '"'
+//             | ','
+//             | ' '
+//             )*;
+
 REGULAR_ID: SIMPLE_LETTER (SIMPLE_LETTER | '$' | '_' | '#' | [0-9])*;
 UNSIGNED_INTEGER    : [0-9]+;
 APPROXIMATE_NUM_LIT : FLOAT_FRAGMENT ('E' ('+' | '-')? (FLOAT_FRAGMENT | [0-9]+))? ('D' | 'F')?;
+
+
 
 // Rule #--- <CHAR_STRING> is a base for Rule #065 <char_string_lit> , it incorporates <character_representation>
 // and a superfluous subtoken typecasting of the "QUOTE"
