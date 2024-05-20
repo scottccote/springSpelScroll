@@ -30,3 +30,5 @@ BEGIN
   bob := SPEL_START 'fooobarrr' foo SPEL_END;
 END;
 ```
+Parses like:
+![image](https://github.com/scottccote/spel_scroll/assets/4732892/e6befaac-a26b-4b63-a9d4-d24184c31a4f)
