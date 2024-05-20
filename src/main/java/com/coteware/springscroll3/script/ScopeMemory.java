@@ -1,13 +1,13 @@
 package com.coteware.springscroll3.script;
 
-import com.coteware.springscroll3.script.variables.Variable;
+import com.coteware.springscroll3.script.declarations.DeclarationSpec;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
 public class ScopeMemory {
-    final Map<String, Variable> memory = new HashMap<>();
+    final Map<String, DeclarationSpec> memory = new HashMap<>();
 
     public ScopeMemory() {
     }
@@ -16,11 +16,11 @@ public class ScopeMemory {
         memory.putAll(parentScopeScopeMemory.memory);
     }
 
-    public void add(Variable variable) {
-        memory.put(variable.getName(),variable);
+    public void add(DeclarationSpec declarationSpec) {
+        memory.put(declarationSpec.getName(),declarationSpec);
     }
 
-    public Optional<Variable> get(String name) {
+    public Optional<DeclarationSpec> get(String name) {
         return Optional.ofNullable(memory.get(name));
     }
 

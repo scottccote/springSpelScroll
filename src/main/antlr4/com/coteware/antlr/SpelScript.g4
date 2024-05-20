@@ -232,7 +232,6 @@ literal
     : CHAR_STRING
     | numeric
     | numeric_negative
-    | MAXVALUE
     ;
 
 numeric

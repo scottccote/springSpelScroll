@@ -5,6 +5,8 @@ public class DeclarationSpecFactory {
         switch (dataTypeEnum) {
             case STRING:
                 return new StringDeclarationSpec(variableName);
+            case INTEGER:
+                return new IntegerDeclarationSpec(variableName);
             default:
                 throw new UnsupportedOperationException(String.format("cannot create spec for variable [%s] of type [%s]",variableName, dataTypeEnum));
         }
