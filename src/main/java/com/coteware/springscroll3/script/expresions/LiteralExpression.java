@@ -1,12 +1,16 @@
 package com.coteware.springscroll3.script.expresions;
 
-public class LiteralExpression<T> implements Expression{
-    private T value;
-    public LiteralExpression(T value) {
-        this.value = value;
+import com.coteware.springscroll3.script.declarations.DeclarationSpec;
+import com.coteware.springscroll3.script.literals.Literal;
+
+public class LiteralExpression implements Expression{
+    private Literal value;
+
+    @Override
+    public void add(Literal literal) {
+        value = literal;
     }
 
-    public T getValue() {
-        return value;
-    }
+
+
 }

@@ -4,12 +4,14 @@ import com.coteware.antlr.SpelScriptLexer;
 import com.coteware.antlr.SpelScriptParser;
 import com.coteware.springscroll3.script.Block;
 import com.coteware.springscroll3.script.ScopeMemory;
+import com.coteware.springscroll3.script.statements.Statement;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collection;
 import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -20,7 +22,7 @@ class ScrollListenerTest {
 
     @Test
     void exitScroll() {
-        String spelScriptContent = "DECLARE foo STRING; bob STRING; bar INTEGER; BEGIN bar := 1; foo := 'BAR'; bob := SPEL_START 'fooobarrr' SPEL_END; END;";
+        String spelScriptContent = "DECLARE foo STRING; bob STRING; bar INTEGER; BEGIN bar := 1; foo := 'BAR'; bob := SPEL_START 'fooobarrr' foo SPEL_END; END;";
         SpelScriptLexer spelScriptLexer = new SpelScriptLexer(CharStreams.fromString(spelScriptContent));
         CommonTokenStream tokens = new CommonTokenStream(spelScriptLexer);
         SpelScriptParser spelScriptParser = new SpelScriptParser(tokens);
@@ -36,12 +38,10 @@ class ScrollListenerTest {
 
         Optional<Block> maybeBlock = scrollListener.getCurrentBlock();
         assertTrue(maybeBlock.isPresent());
-
-
-        assertThat(scrollListener.getMsgs().size(), is(2));
-        assertThat(scrollListener.getMsgs().get(0),
-                is("DECLARE"));
-        assertThat(scrollListener.getMsgs().get(1),
-                is("BEGIN"));
+        Block block = maybeBlock.get();
+        ScopeMemory scopeMemory = block.getScopeMemory();
+        assertTrue(3 == scopeMemory.getDeclarationNames().size());
+        Collection<Statement> statements = block.getStatements();
+        assertTrue(3 == statements.size());
     }
 }
