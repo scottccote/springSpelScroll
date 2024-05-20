@@ -8,9 +8,9 @@ scroll
  : block+ EOF
  ;
 
-unit_statement
-  : block
-  ;
+//unit_statement
+//  : block
+//  ;
 
 block
   : (DECLARE seq_of_declare_specs)? BEGIN seq_of_statements (EXCEPTION exception_handler+)? END ';'
