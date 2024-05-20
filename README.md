@@ -2,6 +2,7 @@
 a simple language that relies on Spel for all expressions
 
 ## example 
+### example 1
 ```
 DECLARE 
   bob String; 
@@ -14,3 +15,18 @@ DECLARE FOO string; begin foo := 1; end;
 Parses like:
 
 ![image](https://github.com/scottccote/spel_scroll/assets/4732892/a6d9bd7a-da65-4764-ae31-f68694435bb0)
+
+### example 2
+```
+DECLARE
+  foo STRING;
+  bob STRING;
+  bar INTEGER;
+  barfloat FLOAT;
+BEGIN
+  barfloat := 1.1;
+  bar := 1;
+  foo := 'BAR';
+  bob := SPEL_START 'fooobarrr' foo SPEL_END;
+END;
+```
