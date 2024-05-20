@@ -22,7 +22,7 @@ class ScrollListenerTest {
 
     @Test
     void exitScroll() {
-        String spelScriptContent = "DECLARE foo STRING; bob STRING; bar INTEGER; BEGIN bar := 1; foo := 'BAR'; bob := SPEL_START 'fooobarrr' foo SPEL_END; END;";
+        String spelScriptContent = "DECLARE foo STRING; bob STRING; bar INTEGER; barfloat FLOAT; BEGIN barfloat := 1.1; bar := 1; foo := 'BAR'; bob := SPEL_START 'fooobarrr' foo SPEL_END; END;";
         SpelScriptLexer spelScriptLexer = new SpelScriptLexer(CharStreams.fromString(spelScriptContent));
         CommonTokenStream tokens = new CommonTokenStream(spelScriptLexer);
         SpelScriptParser spelScriptParser = new SpelScriptParser(tokens);
@@ -40,8 +40,8 @@ class ScrollListenerTest {
         assertTrue(maybeBlock.isPresent());
         Block block = maybeBlock.get();
         ScopeMemory scopeMemory = block.getScopeMemory();
-        assertTrue(3 == scopeMemory.getDeclarationNames().size());
+        assertTrue(4 == scopeMemory.getDeclarationNames().size());
         Collection<Statement> statements = block.getStatements();
-        assertTrue(3 == statements.size());
+        assertTrue(4 == statements.size());
     }
 }
