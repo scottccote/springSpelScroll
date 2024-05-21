@@ -2,18 +2,18 @@ package com.coteware.springscroll3.antlr;
 
 import com.coteware.antlr.SpelScriptBaseListener;
 import com.coteware.antlr.SpelScriptParser;
-import com.coteware.springscroll3.script.Block;
+import com.coteware.springscroll3.script.statements.Block;
 import com.coteware.springscroll3.script.ScopeMemory;
-import com.coteware.springscroll3.script.Scroll;
 import com.coteware.springscroll3.script.declarations.DataTypeEnum;
 import com.coteware.springscroll3.script.declarations.DeclarationSpec;
 import com.coteware.springscroll3.script.declarations.DeclarationSpecFactory;
 import com.coteware.springscroll3.script.exceptions.ScrollAssemblyException;
 import com.coteware.springscroll3.script.expresions.Expression;
-import com.coteware.springscroll3.script.expresions.ExpressionBuilder;
+import com.coteware.springscroll3.script.expresions.ExpressionBuilderFactory;
 import com.coteware.springscroll3.script.literals.Literal;
 import com.coteware.springscroll3.script.literals.LiteralFactory;
 import com.coteware.springscroll3.script.statements.AssignmentStatement;
+import com.coteware.springscroll3.script.statements.PrintStatement;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.util.*;
@@ -59,10 +59,9 @@ public class ScrollListener extends SpelScriptBaseListener {
     @Override
     public void enterBlock(SpelScriptParser.BlockContext ctx) {
         addMsg("enterBlock");
-        final ScopeMemory scopeMemory;
         final Block block;
         if (null == blockStack.peek()) {
-            block = new Block();
+            block = new Block(new ScopeMemory());
         } else {
             block = new Block(new ScopeMemory(blockStack.peek().getScopeMemory()));
         }
@@ -116,19 +115,20 @@ public class ScrollListener extends SpelScriptBaseListener {
 
     @Override
     public void enterStatement(SpelScriptParser.StatementContext ctx) {
-
         addMsg("enterStatement");
     }
 
     @Override
     public void exitStatement(SpelScriptParser.StatementContext ctx) {
-
         addMsg("exitStatement");
+        blockStack.peek().getExpressionBuilder().reset();
     }
 
     @Override
     public void enterAssignment_statement(SpelScriptParser.Assignment_statementContext ctx) {
         addMsg("enterAssignment_statement");
+        AssignmentStatement assignmentStatement = new AssignmentStatement();
+        this.blockStack.peek().addStatement(assignmentStatement);
     }
 
     @Override
@@ -137,15 +137,24 @@ public class ScrollListener extends SpelScriptBaseListener {
         Expression expression = blockStack.peek().getExpressionBuilder().build();
         String variableName = ctx.getChild(0).getText();
         Optional<DeclarationSpec> maybeDeclarationSpec = blockStack.peek().getScopeMemory().get(variableName);
-        AssignmentStatement assignmentStatement = new AssignmentStatement();
+        AssignmentStatement assignmentStatement = blockStack.peek().currentStatement();
         if (maybeDeclarationSpec.isPresent()) {
             assignmentStatement.setDeclarationSpec(maybeDeclarationSpec.get());
         } else {
             throw new ScrollAssemblyException("no declaration found for variable " + variableName);
         }
-        assignmentStatement.setExpression(expression);
-        this.blockStack.peek().addStatement(assignmentStatement);
-        blockStack.peek().getExpressionBuilder().reset();
+
+    }
+
+    @Override
+    public void enterPrint_statement(SpelScriptParser.Print_statementContext ctx) {
+        PrintStatement printStatement = new PrintStatement();
+        this.blockStack.peek().addStatement(printStatement);
+    }
+
+    @Override
+    public void exitPrint_statement(SpelScriptParser.Print_statementContext ctx) {
+        addMsg("exitPrint_statement");
     }
 
     @Override
@@ -193,8 +202,8 @@ public class ScrollListener extends SpelScriptBaseListener {
 
         ScopeMemory scopeMemory = this.blockStack.peek().getScopeMemory();
         int childCount = ctx.getChildCount();
+        ExpressionBuilderFactory expressionBuilder = this.blockStack.peek().getExpressionBuilder();
         if (3 < childCount) {
-            ExpressionBuilder expressionBuilder = this.blockStack.peek().getExpressionBuilder();
             for (int i = 2; i < childCount - 1; i++) {
                 String variableName = ctx.getChild(i).getText();
                 Optional<DeclarationSpec> maybeDeclaration = scopeMemory.get(variableName);
@@ -205,16 +214,42 @@ public class ScrollListener extends SpelScriptBaseListener {
                 }
             }
         }
+        this.blockStack.peek().currentStatement().add(expressionBuilder.build());
     }
 
     @Override
     public void exitExpression(SpelScriptParser.ExpressionContext ctx) {
         addMsg("exitExpression");
+        if (isLiteralExpression(ctx)) {
+            Expression literalExpression = this.blockStack.peek().getExpressionBuilder().build();
+            this.blockStack.peek().currentStatement().add(literalExpression);
+        }
     }
 
     @Override
     public void enterExpression(SpelScriptParser.ExpressionContext ctx) {
         addMsg("enterExpression");
+        if (isLiteralExpression(ctx)) {
+            this.blockStack.peek().getExpressionBuilder().startLiteralExpression();
+        }
+    }
+
+    private boolean isLiteralExpression(SpelScriptParser.ExpressionContext ctx) {
+        SpelScriptParser.LiteralContext literal = ctx.literal();
+        return null != literal;
+    }
+
+    @Override
+    public void enterLogical_expression(SpelScriptParser.Logical_expressionContext ctx) {
+        addMsg("enterLogical_expression");
+        this.blockStack.peek().getExpressionBuilder().startLogicalExpression();
+    }
+
+    @Override
+    public void exitLogical_expression(SpelScriptParser.Logical_expressionContext ctx) {
+        addMsg("exitLogical_expression");
+        ExpressionBuilderFactory expressionBuilder = this.blockStack.peek().getExpressionBuilder();
+        this.blockStack.peek().currentStatement().add(expressionBuilder.build());
     }
 
     @Override

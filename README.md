@@ -28,5 +28,6 @@ BEGIN
   bar := 1;
   foo := 'BAR';
   bob := SPEL_START 'fooobarrr' foo SPEL_END;
+  print bob, foo;
 END;
 ```

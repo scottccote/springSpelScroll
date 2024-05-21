@@ -15,7 +15,8 @@ public class AssignmentStatement extends AbstractStatement {
         this.declarationSpec = declarationSpec;
     }
 
-    public void setExpression(Expression expression) {
+    @Override
+    public void add(Expression expression) {
         this.expression = expression;
     }
 

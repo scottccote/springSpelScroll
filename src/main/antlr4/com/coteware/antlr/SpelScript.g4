@@ -101,6 +101,7 @@ statement
     | null_statement
     | raise_statement
     | case_statement
+    | print_statement
     ;
 
 
@@ -188,6 +189,10 @@ case_else_part
     : ELSE (/*{$case_statement::isStatement}?*/ seq_of_statements | expression)
     ;
 
+print_statement
+  : PRINT expressions
+  | PRINT
+  ;
 // Expression & Condition
 
 condition
@@ -212,8 +217,6 @@ spring_expression
 
 logical_expression
     : unary_logical_operation
-    | logical_expression AND logical_expression
-    | logical_expression OR logical_expression
     ;
 
 unary_logical_operation
@@ -307,6 +310,7 @@ RAISE                          : 'RAISE';
 EXCEPTION                      : 'EXCEPTION';
 SPEL_START                     : 'SPEL_START';
 SPEL_END                       : 'SPEL_END';
+PRINT                          : 'PRINT';
 
 STRING                         : 'STRING';
 INTEGER                        : 'INTEGER';
