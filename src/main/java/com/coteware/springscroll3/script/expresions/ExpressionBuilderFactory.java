@@ -10,23 +10,35 @@ public class ExpressionBuilderFactory {
         return new ExpressionBuilderFactory();
     }
 
-   public LogicalExpressionBuilder startLogicalExpression() {
-       LogicalExpressionBuilder logicalExpressionBuilder = new LogicalExpressionBuilder();
-       this.expressionBuilder = logicalExpressionBuilder;
-       return logicalExpressionBuilder;
+   public LogicalExpressionBuilder useLogicalExpression() {
+        if (null == this.expressionBuilder) {
+            LogicalExpressionBuilder  logicalExpressionBuilder = new LogicalExpressionBuilder();
+            this.expressionBuilder = logicalExpressionBuilder;
+            return logicalExpressionBuilder;
+        } else {
+            return (LogicalExpressionBuilder) this.expressionBuilder;
+        }
     }
-    public LiteralExpressionBuilder startLiteralExpression() {
-        LiteralExpressionBuilder literalExpressionBuilder = new LiteralExpressionBuilder();
-        this.expressionBuilder = literalExpressionBuilder;
-        return literalExpressionBuilder;
+    public LiteralExpressionBuilder useLiteralExpression() {
+        if (null == this.expressionBuilder) {
+            LiteralExpressionBuilder literalExpressionBuilder = new LiteralExpressionBuilder();
+            this.expressionBuilder = literalExpressionBuilder;
+            return literalExpressionBuilder;
+        } else {
+            return (LiteralExpressionBuilder) this.expressionBuilder;
+        }
     }
 
-    public SpringExpressionBuilder startSpringExpression() {
-        SpringExpressionBuilder springExpressionBuilder = new SpringExpressionBuilder();
-        this.expressionBuilder = springExpressionBuilder;
-        return springExpressionBuilder;
+    public SpringExpressionBuilder useSpringExpression() {
+        if (null == this.expressionBuilder) {
+            SpringExpressionBuilder springExpressionBuilder = new SpringExpressionBuilder();
+            this.expressionBuilder = springExpressionBuilder;
+            return springExpressionBuilder;
+        } else {
+            return (SpringExpressionBuilder) this.expressionBuilder;
+        }
     }
-//
+
     public Expression build() {
         return this.expressionBuilder.build();
     }

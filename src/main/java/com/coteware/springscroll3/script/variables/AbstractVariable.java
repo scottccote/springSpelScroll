@@ -14,7 +14,7 @@ public class AbstractVariable<T> implements Variable<T>{
 
     @Override
     public String getName() {
-        return "";
+        return this.name;
     }
 
     @Override

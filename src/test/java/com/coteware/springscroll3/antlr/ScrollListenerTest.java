@@ -20,7 +20,8 @@ class ScrollListenerTest {
 
     @Test
     void exitScroll() {
-        String spelScriptContent = "DECLARE foo STRING; bob STRING; bar INTEGER; barfloat FLOAT; BEGIN barfloat := 1.1; bar := 1; foo := 'BAR'; bob := SPEL_START 'fooobarrr' foo SPEL_END; print bob; END;";
+        String spelScriptContent = "DECLARE foo STRING; bob STRING; bar INTEGER; barfloat FLOAT; BEGIN barfloat := 1.1; bar := 1; foo := 'BAR'; bob := SPEL_START 'fooobarrr' foo SPEL_END; print bob,foo,SPEL_START 'fooobarrr' foo SPEL_END ; END;";
+//        String spelScriptContent = "DECLARE foo STRING; bob STRING; bar INTEGER; barfloat FLOAT; BEGIN print bob,foo,SPEL_START 'fooobarrr' foo SPEL_END ; END;";
         SpelScriptLexer spelScriptLexer = new SpelScriptLexer(CharStreams.fromString(spelScriptContent));
         CommonTokenStream tokens = new CommonTokenStream(spelScriptLexer);
         SpelScriptParser spelScriptParser = new SpelScriptParser(tokens);
