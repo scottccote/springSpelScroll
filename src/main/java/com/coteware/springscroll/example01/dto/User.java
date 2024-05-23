@@ -1,4 +1,4 @@
-package com.coteware.springscroll.example.dto;
+package com.coteware.springscroll.example01.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
