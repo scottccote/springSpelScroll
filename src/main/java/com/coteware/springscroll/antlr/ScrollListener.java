@@ -2,6 +2,8 @@ package com.coteware.springscroll.antlr;
 
 import com.coteware.antlr.SpelScriptBaseListener;
 import com.coteware.antlr.SpelScriptParser;
+import com.coteware.springscroll.script.Scroll;
+import com.coteware.springscroll.script.UnitStatement;
 import com.coteware.springscroll.script.expresions.LogicalOperation;
 import com.coteware.springscroll.script.statements.Block;
 import com.coteware.springscroll.script.ScopeMemory;
@@ -25,11 +27,14 @@ public class ScrollListener extends SpelScriptBaseListener {
 
     private List<String> msgs = new ArrayList<>();
     private Deque<Block> blockStack = new ArrayDeque<>();
+    private final Scroll scroll;
     private Block currentBlock;
 
     private LiteralFactory literalFactory = new LiteralFactory();
+    private String unitName;
 
-    public ScrollListener() {
+    public ScrollListener(Scroll scroll) {
+        this.scroll = scroll;
     }
 
     public List<String> getMsgs() {
@@ -56,8 +61,6 @@ public class ScrollListener extends SpelScriptBaseListener {
         return this.blockStack.peek().getScopeMemory();
     }
 
-
-
     private void addStatement(Statement statement) {
         this.blockStack.peek().addStatement(statement);
     }
@@ -77,6 +80,12 @@ public class ScrollListener extends SpelScriptBaseListener {
     }
 
     @Override
+    public void exitUnit_statement(SpelScriptParser.Unit_statementContext ctx) {
+        addMsg("exitUnit_statement");
+        unitName = ctx.block_name().getText();
+    }
+
+    @Override
     public void enterBlock(SpelScriptParser.BlockContext ctx) {
         addMsg("enterBlock");
         final Block block;
@@ -86,6 +95,10 @@ public class ScrollListener extends SpelScriptBaseListener {
             block = new Block(new ScopeMemory(scopeMemory()));
         }
         blockStack.push(block);
+        if (ctx.getParent() instanceof SpelScriptParser.ScrollContext) {
+            UnitStatement unitStatement = new UnitStatement(block,unitName);
+            scroll.add(unitStatement);
+        }
     }
 
     @Override

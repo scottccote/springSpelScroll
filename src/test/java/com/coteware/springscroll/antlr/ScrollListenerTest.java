@@ -2,6 +2,7 @@ package com.coteware.springscroll.antlr;
 
 import com.coteware.antlr.SpelScriptLexer;
 import com.coteware.antlr.SpelScriptParser;
+import com.coteware.springscroll.script.Scroll;
 import com.coteware.springscroll.script.statements.Block;
 import com.coteware.springscroll.script.ScopeMemory;
 import com.coteware.springscroll.script.statements.Statement;
@@ -28,7 +29,8 @@ class ScrollListenerTest {
         ParseTree tree = spelScriptParser.scroll();
         ParseTreeWalker walker = new ParseTreeWalker();
 
-        ScrollListener scrollListener = new ScrollListener();
+        Scroll scroll = new Scroll();
+        ScrollListener scrollListener = new ScrollListener(scroll);
         walker.walk(scrollListener, tree);
 
         scrollListener.getMsgs().forEach(
@@ -42,5 +44,9 @@ class ScrollListenerTest {
         assertTrue(4 == scopeMemory.getDeclarationNames().size(),"expected 4 declarations - found " + scopeMemory.getDeclarationNames().size());
         Collection<Statement> statements = block.getStatements();
         assertTrue(5 == statements.size(),"expected 5 statements - found " + statements.size());
+
+        assertTrue(1 == scroll.getUnits().size(),"expected 1 top level block");
+
+
     }
 }

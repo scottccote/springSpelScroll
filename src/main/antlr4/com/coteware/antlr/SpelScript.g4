@@ -5,12 +5,16 @@ options {
 }
 
 scroll
- : block+ EOF
+ : unit_statement+ EOF
  ;
 
-//unit_statement
-//  : block
-//  ;
+unit_statement
+  : UNIT_NAME block_name block
+  ;
+
+block_name
+  : identifier ';'
+  ;
 
 block
   : (DECLARE seq_of_declare_specs)? BEGIN seq_of_statements (EXCEPTION exception_handler+)? END ';'
@@ -283,7 +287,7 @@ EQUALS_OP : '=';
 LEFT_BRACKET  : '[';
 RIGHT_BRACKET : ']';
 
-
+UNIT_NAME                      : 'UNIT_NAME';
 DECLARE                        : 'DECLARE';
 BEGIN                          : 'BEGIN';
 END                            : 'END';

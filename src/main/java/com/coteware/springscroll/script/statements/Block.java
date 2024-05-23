@@ -6,6 +6,7 @@ import com.coteware.springscroll.script.expresions.ExpressionBuilderFactory;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 public class Block extends AbstractStatement {
     private final ScopeMemory scopeMemory;
@@ -29,8 +30,8 @@ public class Block extends AbstractStatement {
         this.statements.add(statement);
     }
 
-    public Collection<Statement> getStatements() {
-        return Collections.unmodifiableList(this.statements);
+    public List<Statement> getStatements() {
+        return this.statements;
     }
 
     @Override
