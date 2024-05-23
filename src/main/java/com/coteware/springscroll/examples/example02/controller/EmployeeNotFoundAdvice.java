@@ -1,6 +1,6 @@
-package com.coteware.springscroll.example02.controller;
+package com.coteware.springscroll.examples.example02.controller;
 
-import com.coteware.springscroll.example02.exception.EmployeeNotFoundException;
+import com.coteware.springscroll.examples.example02.exception.EmployeeNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;

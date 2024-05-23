@@ -1,4 +1,4 @@
-package com.coteware.springscroll.example02.exception;
+package com.coteware.springscroll.examples.example02.exception;
 
 public class EmployeeNotFoundException extends RuntimeException {
 

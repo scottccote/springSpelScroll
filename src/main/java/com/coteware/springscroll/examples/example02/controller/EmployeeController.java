@@ -1,9 +1,9 @@
-package com.coteware.springscroll.example02.controller;
+package com.coteware.springscroll.examples.example02.controller;
 
-import com.coteware.springscroll.example02.component.EmployeeModelAssembler;
-import com.coteware.springscroll.example02.dto.Employee;
-import com.coteware.springscroll.example02.exception.EmployeeNotFoundException;
-import com.coteware.springscroll.example02.repository.EmployeeRepository;
+import com.coteware.springscroll.examples.example02.component.EmployeeModelAssembler;
+import com.coteware.springscroll.examples.example02.dto.Employee;
+import com.coteware.springscroll.examples.example02.exception.EmployeeNotFoundException;
+import com.coteware.springscroll.examples.example02.repository.EmployeeRepository;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;

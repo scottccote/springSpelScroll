@@ -1,7 +1,7 @@
-package com.coteware.springscroll.example01.component;
+package com.coteware.springscroll.examples.example01.component;
 
-import com.coteware.springscroll.example01.dto.User;
-import com.coteware.springscroll.example01.service.GitHubLookupService;
+import com.coteware.springscroll.examples.example01.dto.User;
+import com.coteware.springscroll.examples.example01.service.GitHubLookupService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;

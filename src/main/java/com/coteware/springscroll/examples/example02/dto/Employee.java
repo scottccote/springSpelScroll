@@ -1,4 +1,4 @@
-package com.coteware.springscroll.example02.dto;
+package com.coteware.springscroll.examples.example02.dto;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

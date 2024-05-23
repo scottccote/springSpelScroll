@@ -1,9 +1,10 @@
-package com.coteware.springscroll.example02.component;
+package com.coteware.springscroll.examples.example02.component;
 
-import com.coteware.springscroll.example02.controller.EmployeeController;
-import com.coteware.springscroll.example02.dto.Employee;
+import com.coteware.springscroll.examples.example02.controller.EmployeeController;
+import com.coteware.springscroll.examples.example02.dto.Employee;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.stereotype.Component;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
@@ -15,7 +16,7 @@ public class EmployeeModelAssembler implements RepresentationModelAssembler<Empl
     public EntityModel<Employee> toModel(Employee employee) {
 
         return EntityModel.of(employee, //
-                linkTo(methodOn(EmployeeController.class).one(employee.getId())).withSelfRel(),
+                WebMvcLinkBuilder.linkTo(methodOn(EmployeeController.class).one(employee.getId())).withSelfRel(),
                 linkTo(methodOn(EmployeeController.class).all()).withRel("employees"));
     }
 }

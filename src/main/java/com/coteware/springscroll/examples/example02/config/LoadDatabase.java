@@ -1,7 +1,7 @@
-package com.coteware.springscroll.example02.config;
+package com.coteware.springscroll.examples.example02.config;
 
-import com.coteware.springscroll.example02.dto.Employee;
-import com.coteware.springscroll.example02.repository.EmployeeRepository;
+import com.coteware.springscroll.examples.example02.dto.Employee;
+import com.coteware.springscroll.examples.example02.repository.EmployeeRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;

@@ -1,6 +1,6 @@
-package com.coteware.springscroll.example01.service;
+package com.coteware.springscroll.examples.example01.service;
 
-import com.coteware.springscroll.example01.dto.User;
+import com.coteware.springscroll.examples.example01.dto.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.client.RestTemplateBuilder;
