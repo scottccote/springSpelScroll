@@ -8,6 +8,7 @@ public class AssignmentStatement extends AbstractStatement {
     private Expression expression;
 
     public AssignmentStatement() {
+        super(StatementTypeEnum.ASSIGNMENT);
     }
 
     public void setDeclarationSpec(DeclarationSpec declarationSpec) {
@@ -19,8 +20,4 @@ public class AssignmentStatement extends AbstractStatement {
         this.expression = expression;
     }
 
-    @Override
-    public void execute() {
-
-    }
 }

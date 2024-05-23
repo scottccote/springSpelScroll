@@ -15,6 +15,7 @@ public class Block extends AbstractStatement {
 
 
     public Block(ScopeMemory scopeMemory) {
+        super(StatementTypeEnum.BLOCK);
         this.scopeMemory = scopeMemory;
     }
 
@@ -33,11 +34,11 @@ public class Block extends AbstractStatement {
     public List<Statement> getStatements() {
         return this.statements;
     }
-
-    @Override
-    public void execute() {
-
-    }
+//
+//    @Override
+//    public StatementResult execute() {
+//
+//    }
 
     public <T extends Statement> T currentStatement() {
         return (T) statements.get(statements.size()-1);

@@ -6,7 +6,7 @@ import com.coteware.springscroll.script.expresions.Expression;
 import java.util.Optional;
 
 public interface Statement {
-    void execute();
+//    StatementResult execute();
 
     default ScopeMemory newScopeMemory(ScopeMemory scopeMemory) {
         return new ScopeMemory(scopeMemory);
@@ -14,5 +14,7 @@ public interface Statement {
 
     default void add(Expression build) {}
 
-    default Optional<Statement> nextSequencedStatement();
+    Optional<Statement> nextSequenceStatement();
+
+    void setNextSequenceStatement(Statement nextSequenceStatement);
 }
