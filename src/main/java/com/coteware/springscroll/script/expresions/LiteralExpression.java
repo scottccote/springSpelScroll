@@ -8,7 +8,7 @@ public class LiteralExpression<S,T extends Literal<S>> extends AbstractExpressio
 
     @Override
     public <M> void add(Literal<M> literal) {
-        value = (T) literal.getValue();
+        value = (T) literal;
     }
 
     @Override

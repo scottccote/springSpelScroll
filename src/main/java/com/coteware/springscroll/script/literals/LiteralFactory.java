@@ -1,18 +1,22 @@
 package com.coteware.springscroll.script.literals;
 
 import com.coteware.antlr.SpelScriptParser;
+import com.coteware.springscroll.script.exceptions.ScrollAssemblyException;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 public class LiteralFactory {
     public LiteralFactory() {  }
 
     public Literal<?> createLiteral(ParseTree parseTree) {
+        if (null == parseTree) {
+            throw new ScrollAssemblyException("Cannot create literal from null parseTree");
+        }
         return switch (parseTree) {
             case SpelScriptParser.NumericContext numericContext -> createNumericLiteral(numericContext);
             case SpelScriptParser.Numeric_negativeContext numericNegativeContext ->
                     createNegativeNumericLiteral(numericNegativeContext);
             case SpelScriptParser.BooleanContext booleanContext -> createBooleanLiteral(booleanContext);
-            case null, default -> new CharLiteral(parseTree.getText());
+            default -> new CharLiteral(parseTree.getText());
         };
     }
 
