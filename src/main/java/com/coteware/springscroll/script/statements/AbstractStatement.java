@@ -29,7 +29,5 @@ public abstract class AbstractStatement implements Statement {
         doExecute();
     }
 
-    protected void doExecute() {
-
-    }
+    protected abstract void doExecute();
 }

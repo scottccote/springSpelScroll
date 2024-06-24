@@ -2,6 +2,8 @@ package com.coteware.springscroll.script.statements;
 
 import com.coteware.springscroll.script.declarations.DeclarationSpec;
 import com.coteware.springscroll.script.expresions.Expression;
+import com.coteware.springscroll.script.expresions.ExpressionResult;
+import com.coteware.springscroll.script.variables.Variable;
 
 public class AssignmentStatement extends AbstractStatement {
     private DeclarationSpec declarationSpec;
@@ -22,6 +24,8 @@ public class AssignmentStatement extends AbstractStatement {
 
     @Override
     public void doExecute() {
-        this.expression.evaluate();
+        ExpressionResult expressionResult = this.expression.evaluate();
+        Variable variable = this.declarationSpec.getVariable();
+        variable.setValue(expressionResult.getLiteral().getValue());
     }
 }

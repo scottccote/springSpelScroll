@@ -39,4 +39,9 @@ public class Block extends AbstractStatement {
     public <T extends Statement> T currentStatement() {
         return (T) statements.get(statements.size()-1);
     }
+
+    @Override
+    protected void doExecute() {
+        this.statements.getFirst().execute();
+    }
 }
