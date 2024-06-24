@@ -3,9 +3,9 @@ package com.coteware.springscroll.script.expresions;
 import com.coteware.springscroll.script.declarations.DeclarationSpec;
 import com.coteware.springscroll.script.literals.Literal;
 
-public class LogicalExpression extends AbstractExpression implements Expression {
+public class LogicalExpression extends AbstractExpression<Boolean,Literal<Boolean>> {
 
-    private DeclarationSpec declarationSpec;
+    private DeclarationSpec<Boolean> declarationSpec;
     private boolean isNull = false;
     private boolean isNot = false;
 
@@ -15,8 +15,8 @@ public class LogicalExpression extends AbstractExpression implements Expression 
     }
 
     @Override
-    public void add(DeclarationSpec declarationSpec) {
-        this.declarationSpec = declarationSpec;
+    public ExpressionResult<Boolean, Literal<Boolean>> doEvaluate() {
+        return null;
     }
 
     public void setNull() {

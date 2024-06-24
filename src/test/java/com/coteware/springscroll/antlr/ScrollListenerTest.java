@@ -21,8 +21,9 @@ class ScrollListenerTest {
 
     @Test
     void exitScroll() {
-        String spelScriptContent = "DECLARE foo STRING; bob STRING; bar INTEGER; barfloat FLOAT; BEGIN barfloat := 1.1; bar := 1; foo := 'BAR'; bob := SPEL_START 'fooobarrr' foo SPEL_END; print bob,foo,SPEL_START 'fooobarrr' foo SPEL_END ; END;";
-//        String spelScriptContent = "DECLARE foo STRING; bob STRING; bar INTEGER; barfloat FLOAT; BEGIN print bob,foo,SPEL_START 'fooobarrr' foo SPEL_END ; END;";
+        String spelScriptContent = "UNIT_NAME trial; DECLARE foo STRING; bob STRING; bar INTEGER; barfloat FLOAT; BEGIN barfloat := 1.1; bar := 1; foo := 'BAR'; bob := SPEL_START 'fooobarrr' foo SPEL_END; print bob,foo,SPEL_START 'fooobarrr' foo SPEL_END ; END;";
+        //String spelScriptContent = "UNIT_NAME trial; DECLARE foo STRING; bob STRING; bar INTEGER; barfloat FLOAT; BEGIN print bob,foo,SPEL_START 'fooobarrr' foo SPEL_END ; END;";
+       // String spelScriptContent = "UNIT_NAME trial; DECLARE foo STRING; BEGIN print foo,SPEL_START 'foobarrr' foo SPEL_END; END;";
         SpelScriptLexer spelScriptLexer = new SpelScriptLexer(CharStreams.fromString(spelScriptContent));
         CommonTokenStream tokens = new CommonTokenStream(spelScriptLexer);
         SpelScriptParser spelScriptParser = new SpelScriptParser(tokens);
@@ -45,8 +46,9 @@ class ScrollListenerTest {
         Collection<Statement> statements = block.getStatements();
         assertTrue(5 == statements.size(),"expected 5 statements - found " + statements.size());
 
-        assertTrue(1 == scroll.getUnits().size(),"expected 1 top level block");
+        assertTrue(1 == scroll.getUnits().size(),"expected 1 top level block - found " + scroll.getUnits().size());
 
+        scroll.execute();
 
     }
 }

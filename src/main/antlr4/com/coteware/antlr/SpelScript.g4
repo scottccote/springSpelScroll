@@ -239,6 +239,7 @@ literal
     : CHAR_STRING
     | numeric
     | numeric_negative
+    | boolean
     ;
 
 numeric
@@ -248,6 +249,10 @@ numeric
 
 numeric_negative
     : MINUS_SIGN numeric
+    ;
+
+boolean
+    : BOOLEAN
     ;
 
 quoted_string

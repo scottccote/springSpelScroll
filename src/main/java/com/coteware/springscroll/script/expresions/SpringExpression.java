@@ -6,17 +6,21 @@ import com.coteware.springscroll.script.literals.Literal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SpringExpression extends AbstractExpression implements Expression {
-    private Literal literal;
-    private List<DeclarationSpec> declarationSpecs = new ArrayList<>();
+public class SpringExpression<S,T extends Literal<S>> extends AbstractExpression<S,T> {
+    private String literal;
 
     @Override
-    public void add(Literal literal) {
-        this.literal = literal;
+    public <Q> void add(Literal<Q> literal) {
+        this.literal = literal.toString();
     }
 
     @Override
-    public void add(DeclarationSpec declarationSpec) {
-        declarationSpecs.add(declarationSpec);
+    protected ExpressionResult<S, T> doEvaluate() {
+        T springResult = evaluateSpringExpression();
+        return new ExpressionResult<>(springResult);
+    }
+
+    private T evaluateSpringExpression() {
+        return null;
     }
 }

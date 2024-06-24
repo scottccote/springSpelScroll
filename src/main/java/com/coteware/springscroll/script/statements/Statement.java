@@ -17,4 +17,6 @@ public interface Statement {
     Optional<Statement> nextSequenceStatement();
 
     void setNextSequenceStatement(Statement nextSequenceStatement);
+
+    void execute();
 }

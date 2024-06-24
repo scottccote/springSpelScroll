@@ -51,7 +51,10 @@ public class ScrollListener extends SpelScriptBaseListener {
     }
 
     private <T extends Statement> Optional<T> currentStatement() {
-        return Optional.ofNullable((T) this.blockStack.peek().currentStatement());
+        if (this.blockStack.peek().getStatements().isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of((T) this.blockStack.peek().currentStatement());
     }
 
     private ExpressionBuilderFactory expressionBuilder() {
@@ -81,9 +84,25 @@ public class ScrollListener extends SpelScriptBaseListener {
     }
 
     @Override
+    public void enterUnit_statement(SpelScriptParser.Unit_statementContext ctx) {
+        addMsg("enterUnit_statement");
+        unitName = ctx.block_name().getText();
+    }
+
+    @Override
     public void exitUnit_statement(SpelScriptParser.Unit_statementContext ctx) {
         addMsg("exitUnit_statement");
-        unitName = ctx.block_name().getText();
+        if (ctx.getParent() instanceof SpelScriptParser.ScrollContext) {
+
+            Optional<Block> maybeBlock = getCurrentBlock();
+            if (maybeBlock.isPresent()) {
+                UnitStatement unitStatement = new UnitStatement(maybeBlock.get(),unitName);
+                scroll.add(unitStatement);
+            } else {
+                throw new ScrollAssemblyException("Could not find current block");
+            }
+
+        }
     }
 
     @Override
@@ -96,10 +115,7 @@ public class ScrollListener extends SpelScriptBaseListener {
             block = new Block(new ScopeMemory(scopeMemory()));
         }
         blockStack.push(block);
-        if (ctx.getParent() instanceof SpelScriptParser.ScrollContext) {
-            UnitStatement unitStatement = new UnitStatement(block,unitName);
-            scroll.add(unitStatement);
-        }
+
     }
 
     @Override

@@ -18,4 +18,8 @@ public class UnitStatement {
     public String getName() {
         return name;
     }
+
+    public void execute() {
+        getBlock().execute();
+    }
 }

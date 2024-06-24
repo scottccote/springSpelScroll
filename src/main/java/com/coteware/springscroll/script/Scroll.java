@@ -22,4 +22,7 @@ public class Scroll {
         return Collections.unmodifiableList(units);
     }
 
+    public void execute() {
+        units.forEach(unit -> unit.execute());
+    }
 }

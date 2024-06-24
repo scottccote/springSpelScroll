@@ -20,4 +20,8 @@ public class AssignmentStatement extends AbstractStatement {
         this.expression = expression;
     }
 
+    @Override
+    public void doExecute() {
+        this.expression.evaluate();
+    }
 }

@@ -1,6 +1,8 @@
 package com.coteware.springscroll.script.expresions;
 
 import com.coteware.springscroll.script.declarations.DeclarationSpec;
+import com.coteware.springscroll.script.literals.Literal;
+import org.springframework.expression.spel.ast.BooleanLiteral;
 
 public class LogicalExpressionBuilder implements
         ExpressionBuilder,UnaryLogicalOperation,LogicalOperation {

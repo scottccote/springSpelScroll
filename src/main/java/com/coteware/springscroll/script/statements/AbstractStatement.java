@@ -23,4 +23,13 @@ public abstract class AbstractStatement implements Statement {
     public StatementTypeEnum getStatementType() {
         return statementType;
     }
+
+    @Override
+    public void execute() {
+        doExecute();
+    }
+
+    protected void doExecute() {
+
+    }
 }
