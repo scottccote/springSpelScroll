@@ -3,7 +3,10 @@ package com.coteware.springscroll.script.statements;
 import com.coteware.springscroll.script.declarations.DeclarationSpec;
 import com.coteware.springscroll.script.expresions.Expression;
 import com.coteware.springscroll.script.expresions.ExpressionResult;
+import com.coteware.springscroll.script.literals.Literal;
 import com.coteware.springscroll.script.variables.Variable;
+
+import java.util.Optional;
 
 public class AssignmentStatement extends AbstractStatement {
     private DeclarationSpec declarationSpec;
@@ -23,9 +26,20 @@ public class AssignmentStatement extends AbstractStatement {
     }
 
     @Override
-    public void doExecute() {
+    public Optional<String> doEcho() {
+        return Optional.of(declarationSpec.getName() + " = " + this.expression.echo());
+    }
+
+    @Override
+    public Optional<StatementResult> doExecute() {
         ExpressionResult expressionResult = this.expression.evaluate();
         Variable variable = this.declarationSpec.getVariable();
-        variable.setValue(expressionResult.getLiteral().getValue());
+        Optional<? extends Literal> maybeLiteral = expressionResult.getLiteral();
+        if (maybeLiteral.isPresent()) {
+            variable.setValue(maybeLiteral.get());
+        } else {
+            variable.setValue(null);
+        }
+        return Optional.empty();
     }
 }

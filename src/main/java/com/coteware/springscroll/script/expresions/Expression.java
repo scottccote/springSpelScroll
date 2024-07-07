@@ -16,4 +16,6 @@ public interface Expression<S,T extends Literal<S>> {
     }
 
     ExpressionResult<S,T> evaluate();
+
+    String echo();
 }

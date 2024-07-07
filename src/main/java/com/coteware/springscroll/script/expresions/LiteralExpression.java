@@ -16,4 +16,9 @@ public class LiteralExpression<S,T extends Literal<S>> extends AbstractExpressio
         return new ExpressionResult<>(value);
     }
 
+    @Override
+    public String doEcho() {
+        return value.getDataType() + " " + value.getValue();
+    }
+
 }

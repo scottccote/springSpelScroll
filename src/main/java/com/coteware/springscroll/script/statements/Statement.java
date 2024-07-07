@@ -18,5 +18,6 @@ public interface Statement {
 
     void setNextSequenceStatement(Statement nextSequenceStatement);
 
-    void execute();
+    StatementResult execute();
+    Optional<String> echo();
 }

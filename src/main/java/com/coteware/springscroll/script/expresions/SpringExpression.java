@@ -11,7 +11,12 @@ public class SpringExpression<S,T extends Literal<S>> extends AbstractExpression
 
     @Override
     public <Q> void add(Literal<Q> literal) {
-        this.literal = literal.toString();
+        this.literal = literal.getValue().toString();
+    }
+
+    @Override
+    public String doEcho() {
+        return literal + echoDeclarationSpecMap();
     }
 
     @Override

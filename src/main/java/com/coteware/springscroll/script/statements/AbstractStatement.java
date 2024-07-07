@@ -25,9 +25,26 @@ public abstract class AbstractStatement implements Statement {
     }
 
     @Override
-    public void execute() {
-        doExecute();
+    public StatementResult execute() {
+        echo().ifPresent(System.out::println);
+        Optional<StatementResult> maybeStatementResult = doExecute();
+        if (maybeStatementResult.isPresent()) {
+            return maybeStatementResult.get();
+        } else {
+            if (nextSequenceStatement().isPresent()) {
+                return new BaseStatementResult(StatementResultType.NEXT, nextSequenceStatement);
+            } else {
+                return new BaseStatementResult(StatementResultType.TERMINUS,null);
+            }
+        }
     }
 
-    protected abstract void doExecute();
+    protected abstract Optional<StatementResult> doExecute();
+
+    public Optional<String> echo() {
+        String msg = this.getStatementType() + " " + doEcho().orElse("");
+        return Optional.of(msg);
+    }
+
+    protected abstract Optional<String> doEcho();
 }
