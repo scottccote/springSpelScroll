@@ -68,6 +68,13 @@ class LogicalExpressionBuilderTest {
 
     @Test
     void addDeclarationSpec() {
+        LogicalExpressionBuilder builder = new LogicalExpressionBuilder();
+        DeclarationSpec declarationSpec = mock(DeclarationSpec.class);
+        when(declarationSpec.getName()).thenReturn("test");
+        LogicalOperation enhancedBuilder = builder.addDeclarationSpec(declarationSpec);
+        assertNotNull(enhancedBuilder);
+        Expression logicalExpression = enhancedBuilder.unaryOperation().build();
+        assertNotNull(logicalExpression);
     }
 
     @Test
@@ -85,5 +92,12 @@ class LogicalExpressionBuilderTest {
 
     @Test
     void logicalOperation() {
+        LogicalExpressionBuilder builder = new LogicalExpressionBuilder();
+        DeclarationSpec declarationSpec = mock(DeclarationSpec.class);
+        when(declarationSpec.getName()).thenReturn("test");
+        LogicalOperation enhancedBuilder = builder.addDeclarationSpec(declarationSpec);
+        assertNotNull(enhancedBuilder);
+        Expression logicalExpression = enhancedBuilder.unaryOperation().logicalOperation().build();
+        assertNotNull(logicalExpression);
     }
 }
