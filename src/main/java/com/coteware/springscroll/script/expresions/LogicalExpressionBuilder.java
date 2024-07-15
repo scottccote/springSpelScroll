@@ -74,7 +74,7 @@ public class LogicalExpressionBuilder implements
 
     @Override
     public LogicalOperation setIsNot(boolean isNot) {
-        this.isNot = true;
+        this.isNot = isNot;
         return this;
     }
 

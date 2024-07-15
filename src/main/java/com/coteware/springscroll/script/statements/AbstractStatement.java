@@ -26,7 +26,7 @@ public abstract class AbstractStatement implements Statement {
 
     @Override
     public StatementResult execute() {
-        echo().ifPresent(System.out::println);
+        //echo().ifPresent(System.out::println);
         Optional<StatementResult> maybeStatementResult = doExecute();
         if (maybeStatementResult.isPresent()) {
             return maybeStatementResult.get();

@@ -27,12 +27,15 @@ public class PrintStatement extends AbstractStatement {
 
     @Override
     protected Optional<StatementResult> doExecute() {
+        System.out.print("CONSOLE:>");
         expressions.forEach(
                 expression -> {
                     ExpressionResult expressionResult = expression.evaluate();
                     Optional<? extends Literal> maybeLiteral = expressionResult.getLiteral();
                     if (maybeLiteral.isPresent()) {
-                        System.out.print(maybeLiteral.get());
+                        System.out.print(maybeLiteral.get().getValue());
+                    } else {
+                        System.out.print("null");
                     }
                     System.out.print(" ");
                 }
