@@ -20,13 +20,6 @@ public class LogicalExpression <S,T extends Literal<S>> extends AbstractExpressi
         return echoDeclarationSpecMap();
     }
 
-//    @Override
-//    public ExpressionResult<Boolean, Literal<Boolean>> doEvaluate() {
-//
-//        ExpressionResult<Boolean, Literal<Boolean>> expressionResult = new ExpressionResult<>()
-//        return expressionResult;
-//    }
-
     @Override
     public ExpressionResult<S, T> doEvaluate() {
         return new ExpressionResult<>(value);
@@ -35,8 +28,14 @@ public class LogicalExpression <S,T extends Literal<S>> extends AbstractExpressi
     public void setNull() {
         this.isNull = true;
     }
+    public boolean isNull() {
+        return isNull;
+    }
 
     public void setNot() {
         this.isNot = true;
+    }
+    public boolean isNot() {
+        return isNot;
     }
 }

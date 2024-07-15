@@ -16,7 +16,7 @@ public class LiteralFactory {
             case SpelScriptParser.Numeric_negativeContext numericNegativeContext ->
                     createNegativeNumericLiteral(numericNegativeContext);
             case SpelScriptParser.BooleanContext booleanContext -> createBooleanLiteral(booleanContext);
-            default -> new CharLiteral(parseTree.getText());
+            default -> new StringLiteral(parseTree.getText());
         };
     }
 
@@ -33,10 +33,9 @@ public class LiteralFactory {
             Integer integer = Integer.valueOf(text);
             return new IntegerLiteral(integer);
         } catch (NumberFormatException e) {
-            try {
-                Float floatValue = Float.valueOf(text);
-                return new FloatLiteral(floatValue);
-            } catch (NumberFormatException e2) {
+            Float floatValue = Float.valueOf(text);
+            if ("infinity".equalsIgnoreCase(floatValue.toString()) ||
+            "nan".equalsIgnoreCase(floatValue.toString())) {
                 try {
                     Double doubleValue = Double.valueOf(text);
                     return new DoubleLiteral(doubleValue);
@@ -44,6 +43,7 @@ public class LiteralFactory {
                     throw new UnsupportedOperationException("Cannot parse '" + text + "' as a numeric literal");
                 }
             }
+            return new FloatLiteral(floatValue);
         }
     }
 

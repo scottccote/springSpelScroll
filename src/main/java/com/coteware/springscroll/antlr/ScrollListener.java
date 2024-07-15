@@ -346,7 +346,7 @@ public class ScrollListener extends SpelScriptBaseListener {
             String variableName = ctx.getChild(0).getText();
             Optional<DeclarationSpec> maybeDeclaration = scopeMemory.get(variableName);
             if (maybeDeclaration.isPresent()) {
-                expressionBuilder().useLogicalExpression().logicalOperation().addDeclarationSpect(maybeDeclaration.get());
+                expressionBuilder().useLogicalExpression().logicalOperation().addDeclarationSpec(maybeDeclaration.get());
             } else {
                 throw new ScrollAssemblyException("no declaration found for variable " + variableName);
             }
