@@ -26,7 +26,7 @@ public abstract class AbstractStatement implements Statement {
 
     @Override
     public StatementResult execute() {
-        //echo().ifPresent(System.out::println);
+        echo().ifPresent(System.out::println);
         Optional<StatementResult> maybeStatementResult = doExecute();
         if (maybeStatementResult.isPresent()) {
             return maybeStatementResult.get();
@@ -42,7 +42,7 @@ public abstract class AbstractStatement implements Statement {
     protected abstract Optional<StatementResult> doExecute();
 
     public Optional<String> echo() {
-        String msg = this.getStatementType() + " " + doEcho().orElse("");
+        String msg = "SYSTEM ECHO:> " + this.getStatementType() + " " + doEcho().orElse("");
         return Optional.of(msg);
     }
 
