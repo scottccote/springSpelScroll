@@ -21,7 +21,7 @@ class ScrollListenerTest {
 
     @Test
     void exitScroll() {
-        String spelScriptContent = "UNIT_NAME trial; DECLARE foo STRING; bob STRING; bar INTEGER; barfloat FLOAT; BEGIN barfloat := 1.1; bar := 1; foo := 'BAR'; bob := SPEL_START 'fooobarrr' foo SPEL_END; print bob,foo,SPEL_START 'fooobarrr' foo SPEL_END ; END;";
+        String spelScriptContent = "UNIT_NAME trial; DECLARE foo STRING; bob STRING; bar INTEGER; barfloat FLOAT; BEGIN barfloat := 1.1; bar := 1; foo := 'BAR'; bob := SPEL_START '@spelDemoService.vavoom(#root.getParameter())' foo SPEL_END; print bob,foo,SPEL_START 'new String('hello world').toUpperCase()' SPEL_END ; END;";
         //String spelScriptContent = "UNIT_NAME trial; DECLARE foo STRING; bob STRING; bar INTEGER; barfloat FLOAT; BEGIN print bob,foo,SPEL_START 'fooobarrr' foo SPEL_END ; END;";
        // String spelScriptContent = "UNIT_NAME trial; DECLARE foo STRING; BEGIN print foo,SPEL_START 'foobarrr' foo SPEL_END; END;";
         SpelScriptLexer spelScriptLexer = new SpelScriptLexer(CharStreams.fromString(spelScriptContent));
