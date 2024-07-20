@@ -10,7 +10,10 @@ I wanted to make a simple language that would glue together ***SpEL*** operation
 * interpreted by as *sha-bang* with referenced jars in a link referencing directory
 * all expressions delegated to an underlying engine such as Spring Expression Language Interpreter
 
-
+## Problems
+1. Need to cleanly define a methodology for suggesting what is allowed in the sandbox
+2. Clean method to describe parameter object
+3. Change support from single quotes to double quotes so that spring expressions are handled properly
 
 ## Examples 
 ### Example 1 - A simple assignment
