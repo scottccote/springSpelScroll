@@ -2,6 +2,7 @@ package com.coteware.springscroll.script.expresions;
 
 import com.coteware.springscroll.script.declarations.DeclarationSpec;
 import com.coteware.springscroll.script.literals.Literal;
+import com.coteware.springscroll.spel.SpelService;
 
 /**
  * an expression eventually resolves to a literal
@@ -18,4 +19,8 @@ public interface Expression<S,T extends Literal<S>> {
     ExpressionResult<S,T> evaluate();
 
     String echo();
+
+    default void setSpelService(SpelService spelService) {
+
+    }
 }

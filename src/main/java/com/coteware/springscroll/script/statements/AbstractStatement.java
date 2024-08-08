@@ -1,10 +1,13 @@
 package com.coteware.springscroll.script.statements;
 
+import com.coteware.springscroll.spel.SpelService;
+
 import java.util.Optional;
 
 public abstract class AbstractStatement implements Statement {
     private Statement nextSequenceStatement;
     private final StatementTypeEnum statementType;
+    protected SpelService spelService;
 
     public AbstractStatement(StatementTypeEnum statementType) {
         this.statementType = statementType;
@@ -47,4 +50,8 @@ public abstract class AbstractStatement implements Statement {
     }
 
     protected abstract Optional<String> doEcho();
+
+    public void setSpelService(SpelService spelService) {
+        this.spelService = spelService;
+    }
 }

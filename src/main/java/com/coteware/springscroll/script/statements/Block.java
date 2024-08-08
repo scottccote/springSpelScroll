@@ -43,6 +43,7 @@ public class Block extends AbstractStatement {
             Statement statement = this.statements.getFirst();
             while (null != statement) {
                 // execute the current statement and get its result
+                statement.setSpelService(this.spelService);
                 StatementResult result = statement.execute();
                 StatementResultType statementResultType = result.getStatementResultType();
                 switch (statementResultType) {

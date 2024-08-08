@@ -24,22 +24,20 @@ class SpelServiceImplTest {
 
     @Test
     void evaluate() {
-        SpelServiceImpl spelService = new SpelServiceImpl();
-        SpelParserConfiguration configuration = SpelServiceImpl.getSpelParserConfiguration();
-
-        StandardEvaluationContext context = SpelServiceImpl.getStandardEvaluationContext(null,beanResolver);
-        Optional<?> maybe = spelService.evaluate("new String('hello world').toUpperCase()", configuration,context);
+        SpelParserConfiguration configuration = new SpelParserConfiguration();
+        SpelServiceImpl spelService = new SpelServiceImpl(configuration, beanResolver);
+        SpelRoot spelRoot = new SpelRoot();
+        Optional<?> maybe = spelService.evaluate("new String('hello world').toUpperCase()", spelRoot);
         assertTrue(maybe.isPresent());
         assertEquals("HELLO WORLD", maybe.get());
     }
 
     @Test
     void evaluate2() {
-        SpelServiceImpl spelService = new SpelServiceImpl();
-        SpelParserConfiguration configuration = SpelServiceImpl.getSpelParserConfiguration();
-
-        StandardEvaluationContext context = SpelServiceImpl.getStandardEvaluationContext(null,beanResolver);
-        Optional<?> maybe = spelService.evaluate("@spelDemoService.vavoom('booyah')", configuration,context);
+        SpelParserConfiguration configuration = new SpelParserConfiguration();
+        SpelServiceImpl spelService = new SpelServiceImpl(configuration, beanResolver);
+        SpelRoot spelRoot = new SpelRoot();
+        Optional<?> maybe = spelService.evaluate("@spelDemoService.vavoom('booyah')", spelRoot);
         assertTrue(maybe.isPresent());
         assertEquals("vavoom----->booyah", maybe.get());
     }
@@ -47,12 +45,11 @@ class SpelServiceImplTest {
 
     @Test
     void evaluate3() {
-        SpelServiceImpl spelService = new SpelServiceImpl();
-        SpelParserConfiguration configuration = SpelServiceImpl.getSpelParserConfiguration();
+        SpelParserConfiguration configuration = new SpelParserConfiguration();
+        SpelServiceImpl spelService = new SpelServiceImpl(configuration, beanResolver);
         SpelRoot spelRoot = new SpelRoot();
         spelRoot.setParameter("howdy partner");
-        StandardEvaluationContext context = SpelServiceImpl.getStandardEvaluationContext(spelRoot,beanResolver);
-        Optional<?> maybe = spelService.evaluate("@spelDemoService.vavoom(#root.getParameter())", configuration,context);
+        Optional<?> maybe = spelService.evaluate("@spelDemoService.vavoom(#root.getParameter())", spelRoot);
         assertTrue(maybe.isPresent());
         assertEquals("vavoom----->howdy partner", maybe.get());
     }

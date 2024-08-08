@@ -3,7 +3,6 @@ package com.coteware.springscroll.spel;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.expression.BeanFactoryResolver;
 
 @TestConfiguration

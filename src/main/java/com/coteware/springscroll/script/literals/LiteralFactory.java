@@ -16,7 +16,7 @@ public class LiteralFactory {
             case SpelScriptParser.Numeric_negativeContext numericNegativeContext ->
                     createNegativeNumericLiteral(numericNegativeContext);
             case SpelScriptParser.BooleanContext booleanContext -> createBooleanLiteral(booleanContext);
-            default -> new StringLiteral(parseTree.getText());
+            default -> new StringLiteral(parseTree.getText().substring(1, parseTree.getText().length() - 1));
         };
     }
 

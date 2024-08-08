@@ -1,5 +1,6 @@
 package com.coteware.springscroll.script.statements;
 
+import com.coteware.springscroll.script.exceptions.ScrollAssemblyException;
 import com.coteware.springscroll.script.expresions.Expression;
 import com.coteware.springscroll.script.expresions.ExpressionResult;
 import com.coteware.springscroll.script.literals.Literal;
@@ -27,9 +28,13 @@ public class PrintStatement extends AbstractStatement {
 
     @Override
     protected Optional<StatementResult> doExecute() {
+        if (null == this.spelService) {
+            throw new ScrollAssemblyException("No spel service available");
+        }
         System.out.print("CONSOLE:>");
         expressions.forEach(
                 expression -> {
+                    expression.setSpelService(this.spelService);
                     ExpressionResult expressionResult = expression.evaluate();
                     Optional<? extends Literal> maybeLiteral = expressionResult.getLiteral();
                     if (maybeLiteral.isPresent()) {
